@@ -37,7 +37,7 @@ def format_markdown(path: str) -> None:
         markdown_text = f.read()
 
     formatted_text = re.sub(
-        r'```(.*?)\n(.*?)```',
+        r"```(.*?)\n(.*?)```",
         format_match,
         markdown_text,
         flags=re.DOTALL,
