@@ -1,4 +1,6 @@
+import argparse
 import re
+from typing import Sequence
 
 from black import format_str, Mode
 from sqlfluff import fix
@@ -32,7 +34,7 @@ def format_match(match: re.Match) -> str:
     return f"```{language}\n{format_func(code.strip())}\n```"
 
 
-def format_markdown(path: str) -> None:
+def format_markdown(path: str) -> int:
     with open(path, "rt") as f:
         markdown_text = f.read()
 
@@ -46,6 +48,22 @@ def format_markdown(path: str) -> None:
     if markdown_text != formatted_text:
         with open("formatting_result.md", "wt") as f:
             f.write(formatted_text)
-        print("Formatted code")
-        return
-    print("Code was not formatted")
+        print(f"Reformatted snippets in {path} file.")
+        return 1
+    return 0
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filenames", nargs="*")
+    args = parser.parse_args(argv)
+
+    status = 0
+    for filename in args.filenames:
+        status = format_markdown(filename)
+
+    return status
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
