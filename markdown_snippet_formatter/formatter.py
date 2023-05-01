@@ -31,24 +31,30 @@ def format_match(match: re.Match) -> str:
         "sql": format_sql_code,
     }.get(language)
 
-    return f"```{language}\n{format_func(code.strip())}\n```"
+    return f"```{language}\n{format_func(code.strip())}```"
+
+
+def format_markdown_text(markdown: str) -> str:
+    formatted_text = re.sub(
+        r"```(.*?)\n(.*?)```",
+        format_match,
+        markdown,
+        flags=re.DOTALL,
+    )
+
+    return formatted_text
 
 
 def format_markdown(path: str) -> int:
     with open(path, "rt") as f:
         markdown_text = f.read()
 
-    formatted_text = re.sub(
-        r"```(.*?)\n(.*?)```",
-        format_match,
-        markdown_text,
-        flags=re.DOTALL,
-    )
+    formatted_text = format_markdown_text(markdown_text)
 
     if markdown_text != formatted_text:
-        with open("formatting_result.md", "wt") as f:
+        with open(path, "wt") as f:
             f.write(formatted_text)
-        print(f"Reformatted snippets in {path} file.")
+        print(f"Reformatted Python/SQL snippets in {path} file.")
         return 1
     return 0
 
