@@ -1,6 +1,6 @@
--   id: format-python-and-sql-in-markdown-files
+-   id: format-markdown-code-snippets
     name: format python and sql snippets in markdown files
     description: formats python and sql snippets (with black and sqlfluff).
-    entry: format-sql-python-in-md
+    entry: format-markdown-code-snippets
     language: python
     stages: [commit]
