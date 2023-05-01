@@ -4,3 +4,4 @@
     entry: format-markdown-code-snippets
     language: python
     stages: [commit]
+    types: [markdown]
