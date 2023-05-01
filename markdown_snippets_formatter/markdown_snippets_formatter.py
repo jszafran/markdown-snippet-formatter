@@ -1,6 +1,5 @@
 import argparse
 import re
-from typing import Sequence
 
 from black import format_str, Mode
 from sqlfluff import fix
@@ -59,7 +58,7 @@ def format_markdown(path: str) -> int:
     return 0
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="*")
     args = parser.parse_args(argv)
